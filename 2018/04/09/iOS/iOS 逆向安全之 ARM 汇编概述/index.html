@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS原理,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一个 App 安装在手机上面的可执行文件本质上是一个二进制文件，执行的指令是二进制命令，是由 CPU 去执行的。逆向开发就是建立在分析二进制文件上面，通过相关工具去分析其汇编指令。">
+<meta name="keywords" content="iOS原理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 逆向安全之 ARM 汇编概述">
+<meta property="og:url" content="http://yoursite.com/2018/04/09/iOS/iOS 逆向安全之 ARM 汇编概述/index.html">
+<meta property="og:site_name" content="zerocc博客">
+<meta property="og:description" content="一个 App 安装在手机上面的可执行文件本质上是一个二进制文件，执行的指令是二进制命令，是由 CPU 去执行的。逆向开发就是建立在分析二进制文件上面，通过相关工具去分析其汇编指令。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5433182-e306a0b1fc6298ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5433182-a3e787d001a9d914.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5433182-b6831d3448f95f4f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/420">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5433182-46cac02dab3f0dc3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/280">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5433182-f466b0cb7d0b944e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/200">
+<meta property="og:updated_time" content="2018-05-01T04:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 逆向安全之 ARM 汇编概述">
+<meta name="twitter:description" content="一个 App 安装在手机上面的可执行文件本质上是一个二进制文件，执行的指令是二进制命令，是由 CPU 去执行的。逆向开发就是建立在分析二进制文件上面，通过相关工具去分析其汇编指令。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5433182-e306a0b1fc6298ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/09/iOS/iOS 逆向安全之 ARM 汇编概述/">
+
+
+
+
+
+  <title>iOS 逆向安全之 ARM 汇编概述 | zerocc博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zerocc博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">仗键行天下</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-ios">
+          <a href="/categories/iOS" rel="section">
+            
+            iOS
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-c++">
+          <a href="/categories/C" rel="section">
+            
+            C++
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音视频">
+          <a href="/categories/音视频" rel="section">
+            
+            音视频
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-安全攻防">
+          <a href="/categories/安全攻防" rel="section">
+            
+            安全攻防
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-基础整理">
+          <a href="/categories/基础整理" rel="section">
+            
+            基础整理
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时光沙漏">
+          <a href="/categories/时光沙漏" rel="section">
+            
+            时光沙漏
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/iOS/iOS 逆向安全之 ARM 汇编概述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zerocc">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zerocc博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS 逆向安全之 ARM 汇编概述</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-09T20:43:03+08:00">
+                2018-04-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-05-01T12:00:00+08:00">
+                2018-05-01
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/安全攻防/" itemprop="url" rel="index">
+                    <span itemprop="name">安全攻防</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>一个 App 安装在手机上面的可执行文件本质上是一个二进制文件，执行的指令是二进制命令，是由 CPU 去执行的。逆向开发就是建立在分析二进制文件上面，通过相关工具去分析其汇编指令。</p>
+<a id="more"></a>
+<h1 id="编程语言的发展"><a href="#编程语言的发展" class="headerlink" title="编程语言的发展"></a>编程语言的发展</h1><hr>
+<h2 id="机器语言"><a href="#机器语言" class="headerlink" title="机器语言"></a>机器语言</h2><p>也就是二进制语言，由 0 和 1 组成的机器指令，硬件 CPU 去读取指令 0 和 1，分别对应的就是高低电频。</p>
+<ul>
+<li>加：0100 0000</li>
+<li>减：0100 1000</li>
+<li>乘：1111 0111 1110 0000</li>
+<li>除：1111 0111 1111 0000</li>
+</ul>
+<h2 id="汇编语言-assembly-language"><a href="#汇编语言-assembly-language" class="headerlink" title="汇编语言(assembly language)"></a>汇编语言(assembly language)</h2><p>由于二进制的繁琐，就出现使用助记符代替机器语言，相应的产生了编译器，将助记符编译为机器语言。这就是世界上第一种实际意义的编程语言汇编。</p>
+<ul>
+<li>加：INC EAX 通过编译器 0100 0000</li>
+<li>减：DEC EAX 通过编译器 0100 1000</li>
+<li>乘：MUL EAX 通过编译器 1111 0111 1110 0000</li>
+<li>除：DIV EAX 通过编译器 1111 0111 1111 0000</li>
+</ul>
+<h2 id="高级语言（High-level-programming-language"><a href="#高级语言（High-level-programming-language" class="headerlink" title="高级语言（High-level programming language)"></a>高级语言（High-level programming language)</h2><p>使用汇编语言还是很繁琐，可读性差等，便有了后来的 C\C++\Java\OC\Swift等,更加接近人类的自然语言的高级语言。</p>
+<p>我使用的高级语言编写的代码到最终运行终端设备上的过程：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5433182-e306a0b1fc6298ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<ul>
+<li>汇编语言与机器语言一一对应，每一条机器指令都有与之对应的汇编指令;</li>
+<li>汇编语言可以通过编译得到机器语言，机器语言可以通过反汇编得到汇编语言;</li>
+<li>高级语言可以通过编译得到汇编语言(机器语言)，但汇编语言(机器语言)几乎不可能还原成高级语言;</li>
+</ul>
+<h1 id="汇编语言种类"><a href="#汇编语言种类" class="headerlink" title="汇编语言种类"></a>汇编语言种类</h1><hr>
+<h2 id="常见的汇编语言"><a href="#常见的汇编语言" class="headerlink" title="常见的汇编语言"></a>常见的汇编语言</h2><ul>
+<li>8086汇编（8086处理器是16bit的CPU）；</li>
+<li>Win32汇编；</li>
+<li>Win64汇编；</li>
+<li>ARM汇编（嵌入式、Mac、iOS）；</li>
+</ul>
+<h2 id="iPhone-中因-CPU-架构差异，不同的-ARM-汇编"><a href="#iPhone-中因-CPU-架构差异，不同的-ARM-汇编" class="headerlink" title="iPhone 中因 CPU 架构差异，不同的 ARM 汇编"></a>iPhone 中因 CPU 架构差异，不同的 ARM 汇编</h2><table>
+<thead>
+<tr>
+<th style="text-align:left">架构</th>
+<th>设备</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">armv6</td>
+<td>iPhone, iPhone2, iPhone3G, 第一代、第二代 iPod Touch</td>
+</tr>
+<tr>
+<td style="text-align:left">armv7</td>
+<td>iPhone3GS, iPhone4, iPhone4S,iPad, iPad2, iPad3(The New iPad), iPad mini, iPod Touch 3G, iPod Touch4</td>
+</tr>
+<tr>
+<td style="text-align:left">armv7s</td>
+<td>iPhone5, iPhone5C, iPad4(iPad with Retina Display)</td>
+</tr>
+<tr>
+<td style="text-align:left">arm64</td>
+<td>iPhone5S 以后 iPhoneX , iPad Air, iPad mini2以后</td>
+</tr>
+</tbody>
+</table>
+<p>模拟器都是 X86 架构。</p>
+<p>iOS 我们打包兼容原理是：一般打包配置中选择 armv7、armv7s、arm64 将三个包合为一个包。</p>
+<h1 id="硬件结构"><a href="#硬件结构" class="headerlink" title="硬件结构"></a>硬件结构</h1><hr>
+<h2 id="APP-或者程序的执行过程"><a href="#APP-或者程序的执行过程" class="headerlink" title="APP 或者程序的执行过程"></a>APP 或者程序的执行过程</h2><p><img src="https://upload-images.jianshu.io/upload_images/5433182-a3e787d001a9d914.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt></p>
+<p>APP 安装在本地磁盘，启动后将机器指令装载到内存中，再由 CPU 去加载读取内存中的机器指令及相关写操作，最后再由 CPU 去调度相关终端设备输出。</p>
+<p>计算机系统中，习惯上把内存、CPU合称为主机；</p>
+<p>微型计算机基本结构 ：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5433182-b6831d3448f95f4f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/420" alt="微型计算机基本结构"></p>
+<ul>
+<li>硬件相关最为重要是 CPU/内存;</li>
+<li>在汇编中,大部分指令都是和 CPU 与内存相关的;</li>
+</ul>
+<h2 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h2><p><img src="https://upload-images.jianshu.io/upload_images/5433182-46cac02dab3f0dc3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/280" alt></p>
+<ul>
+<li><p>寄存器</p>
+<p>对于我们开发来说，CPU 中最主要部件是寄存器，为了性能 CPU 在内部开辟一小块临时存储区域，并在进行运算时通过内部总线将数据从内存复制到这一小块临时存储区域中，运算时就在这一小快临时存储区域内进行。这一小块临时存储区域就是寄存器。可以通过改变寄存器的内容来实现对CPU的控制；</p>
+</li>
+<li><p>高速缓存</p>
+<p>CPU每执行一条指令前都需要从内存中将指令读取到CPU内并执行。而寄存器的运行速度相比内存读写要快很多,为了性能,CPU还集成了一个高速缓存存储区域.当程序在运行时，先将要执行的指令代码以及数据复制到高速缓存中去(由操作系统完成).CPU直接从高速缓存依次读取指令来执行. iPhoneX上搭载的ARM处理器 A11 只有2级缓存，其1级缓存的容量是64KB，2级缓存的容量8M。</p>
+<p>内存地址与高速缓存的关系：内存地址和高速缓存间有一个映射表，执行指令过程 pc 指向地址，指令在高速缓存中找不到的时候会再将内存中指令拷贝到高速缓存区域中</p>
+</li>
+</ul>
+<h2 id="总线"><a href="#总线" class="headerlink" title="总线"></a>总线</h2><p>每一个 CPU 芯片都有许多管脚，插在主板上；管脚和总线相连，总线就是一根电线，CPU 通过总线跟外部器件进行交互。</p>
+<p>总线的分类：</p>
+<ul>
+<li><p>地址总线</p>
+<p>它的宽度决定了CPU的寻址能力，直接影响能用多大的内存条，也就是说内存地址空间大小受CPU地址总线宽度限制。8086的地址总线宽度是20，所以寻址能力是 1M (2^20 个内存单元或者说2^20个字节)，8086CPU内部用两个16位地址合成的方法(地址加法器)来形成一个20位的物理地址;</p>
+</li>
+<li><p>数据总线</p>
+<p>它的宽度决定了CPU的单次数据传送量，也就是数据传送速度。8086的数据总线宽度是16，所以单次最大传递2个字节的数据(8根线8个比特位一个字节)。32 位CPU其数据总线 32 根，每一次通电传递4个字节，而64位64根对应8个字节，所以调用指针在32位系统中是4个字节而在64位中是8个字节。  </p>
+</li>
+<li><p>控制总线</p>
+<p>它的宽度决定了 CPU 对其他器件的控制能力、能有多少种控制；例如对内存是读操作还是写操作。</p>
+</li>
+</ul>
+<h2 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h2><p>存储器是计算机中的记忆存储部件。存储器既能够接受和保存数据，又能够向其他部件提供数据。存储器分为内存和外存两大类。</p>
+<ul>
+<li><p>内存</p>
+<p>内存储器分为随机读/写存储器(RAM)、只读存储器(ROM)和高速缓冲存储器三类。内存一般指的是RAM。内存中最小的单位是字节，每个内存单元为一个字节，内存地址 0x0001 与 0x0002 相隔了一个字节(Byte)8个比特位(bit)；</p>
+<ul>
+<li>ROM（Read Only Memory）－只读存储器，掉电后数据不丢失的一种存储器，主要用来存放”固件”（Firmware）。主板、显卡、网卡上的BIOS就是一种ROM，因为他们程序和数据的变动概率都很低。</li>
+<li>RAM (Random-Access Memory) －随机存取存储器也叫主存储器，一种存储单元结构，用于保存CPU处理的数据信息。”随机”（Random）存取是与”顺序（serial）”存取相对而言的，意思是CPU可以从RAM中任意地址中直接读取所需的数据，而不必从头至尾一一查找。 </li>
+</ul>
+<p>以 8086为例其存储器结构如下图：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5433182-f466b0cb7d0b944e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/200" alt="8086 存储器结构"></p>
+<ul>
+<li>内存地址空间的大小受 CPU 地址总线宽度的限制。8086的地址总线宽度为20，可以定位2^20个不同的内存单元（内存地址范围0x00000~0xFFFFF），所以8086的内存空间大小为1MB</li>
+<li>0x00000~0x9FFFF：主存储器。可读可写</li>
+<li>0xA0000~0xBFFFF：向显存中写入数据，这些数据会被显卡输出到显示器。可读可写</li>
+<li>0xC0000~0xFFFFF：存储各种硬件\系统信息。只读</li>
+</ul>
+</li>
+<li><p>外存储器</p>
+<p>外存储器主要包括硬盘、光盘、U盘和移动硬盘等。</p>
+</li>
+</ul>
+<p><strong>备注</strong>： </p>
+<ul>
+<li>1个字节byte等于8比特bit(8位)，一个字符等于2个字节，1kb = 1024B,1B = 8b。</li>
+<li>2位16进制数是一个字节。一个字节八个比特位，就是八个二进制位，四个二进制数最大表示为15，就是一个16进制数，所以八位可以表示成两个16进制数。</li>
+</ul>
+<p><a href="https://blog.csdn.net/u012513972/article/details/78349192/" target="_blank" rel="noopener">【链接】ARM和x86比较</a></p>
+<p><a href="https://blog.csdn.net/bjbz_cxy/article/details/78508768" target="_blank" rel="noopener">【链接】深度理解CPU内部寻址方式</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS原理/" rel="tag"># iOS原理</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/时光沙漏/希望我们冷漠且礼貌相处/" rel="next" title="希望我们冷漠且礼貌的相处">
+                <i class="fa fa-chevron-left"></i> 希望我们冷漠且礼貌的相处
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/02/时光沙漏/后来的我们/" rel="prev" title="后来的我们">
+                后来的我们 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zerocc</p>
+              <p class="site-description motion-element" itemprop="description">似水流年在楼外，我却长醉不愿醒。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编程语言的发展"><span class="nav-number">1.</span> <span class="nav-text">编程语言的发展</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#机器语言"><span class="nav-number">1.1.</span> <span class="nav-text">机器语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#汇编语言-assembly-language"><span class="nav-number">1.2.</span> <span class="nav-text">汇编语言(assembly language)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级语言（High-level-programming-language"><span class="nav-number">1.3.</span> <span class="nav-text">高级语言（High-level programming language)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#汇编语言种类"><span class="nav-number">2.</span> <span class="nav-text">汇编语言种类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常见的汇编语言"><span class="nav-number">2.1.</span> <span class="nav-text">常见的汇编语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iPhone-中因-CPU-架构差异，不同的-ARM-汇编"><span class="nav-number">2.2.</span> <span class="nav-text">iPhone 中因 CPU 架构差异，不同的 ARM 汇编</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#硬件结构"><span class="nav-number">3.</span> <span class="nav-text">硬件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#APP-或者程序的执行过程"><span class="nav-number">3.1.</span> <span class="nav-text">APP 或者程序的执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU"><span class="nav-number">3.2.</span> <span class="nav-text">CPU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总线"><span class="nav-number">3.3.</span> <span class="nav-text">总线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储器"><span class="nav-number">3.4.</span> <span class="nav-text">存储器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">[object Object]</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

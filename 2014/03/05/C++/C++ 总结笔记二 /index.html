@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="C++ 数组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ 总结笔记二">
+<meta property="og:url" content="http://yoursite.com/2014/03/05/C++/C++ 总结笔记二 /index.html">
+<meta property="og:site_name" content="zerocc博客">
+<meta property="og:description" content="C++ 数组">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2014-03-05T15:57:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ 总结笔记二">
+<meta name="twitter:description" content="C++ 数组">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/03/05/C++/C++ 总结笔记二 /">
+
+
+
+
+
+  <title>C++ 总结笔记二 | zerocc博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zerocc博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">仗键行天下</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-ios">
+          <a href="/categories/iOS" rel="section">
+            
+            iOS
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-c++">
+          <a href="/categories/C" rel="section">
+            
+            C++
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音视频">
+          <a href="/categories/音视频" rel="section">
+            
+            音视频
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-安全攻防">
+          <a href="/categories/安全攻防" rel="section">
+            
+            安全攻防
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-基础整理">
+          <a href="/categories/基础整理" rel="section">
+            
+            基础整理
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时光沙漏">
+          <a href="/categories/时光沙漏" rel="section">
+            
+            时光沙漏
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2014/03/05/C++/C++ 总结笔记二 /">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zerocc">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zerocc博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++ 总结笔记二</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-03-05T09:57:03+08:00">
+                2014-03-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2014-03-05T23:57:03+08:00">
+                2014-03-05
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="C-数组"><a href="#C-数组" class="headerlink" title="C++ 数组"></a>C++ 数组</h1><a id="more"></a>
+<h1 id="C-指针"><a href="#C-指针" class="headerlink" title="C++ 指针"></a>C++ 指针</h1><h2 id="什么是指针"><a href="#什么是指针" class="headerlink" title="什么是指针"></a>什么是指针</h2><p>每一个变量都有一个内存位置，每一个内存位置都定义了可使用连字号（&amp;）运算符访问的地址，它表示了在内存中的一个地址；示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   int  var1 = 10;</span><br><span class="line"></span><br><span class="line">   cout &lt;&lt; &quot;var1 变量的地址： &quot;;</span><br><span class="line">   cout &lt;&lt; &amp;var1 &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var1 变量的地址： 0xbfebd5c0</span><br></pre></td></tr></table></figure>
+<p>指针是一个变量，其值为另一个变量的地址,即内存位置的直接地址。就像其他变量或常量一样，必须在使用指针存储其他变量地址之前，对其进行声明。指针变量声明的一般形式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type *var-name;</span><br></pre></td></tr></table></figure>
+<p>type 是指针的基类型，它必须是一个有效的 C++ 数据类型，var-name 是指针变量的名称。用来声明指针的星号 * 与乘法中使用的星号是相同的。但是，在这个语句中，星号是用来指定一个变量是指针。</p>
+<p>所有指针的值的实际数据类型都是一个代表内存地址的长的十六进制数;不同数据类型的指针之间唯一的不同是，指针所指向的变量类型不同。</p>
+<h2 id="指针的基本使用"><a href="#指针的基本使用" class="headerlink" title="指针的基本使用"></a>指针的基本使用</h2><p>使用指针时会频繁进行以下几个操作：定义一个指针变量、把变量地址赋值给指针、访问指针变量中可用地址的值。这些是通过使用一元运算符 * 来返回位于操作数所指定地址的变量的值。示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   int  var = 20;   // 实际变量的声明</span><br><span class="line">   int  *ip;        // 指针变量的声明</span><br><span class="line"></span><br><span class="line">   ip = &amp;var;       // 在指针变量中存储 var 的地址</span><br><span class="line"></span><br><span class="line">   cout &lt;&lt; &quot;Value of var variable: &quot;;</span><br><span class="line">   cout &lt;&lt; var &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">   // 输出在指针变量中存储的地址</span><br><span class="line">   cout &lt;&lt; &quot;Address stored in ip variable: &quot;;</span><br><span class="line">   cout &lt;&lt; ip &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">   // 访问指针中地址的值</span><br><span class="line">   cout &lt;&lt; &quot;Value of *ip variable: &quot;;</span><br><span class="line">   cout &lt;&lt; *ip &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Value of var variable: 20</span><br><span class="line">Address stored in ip variable: 0xbfc601ac</span><br><span class="line">Value of *ip variable: 20</span><br></pre></td></tr></table></figure>
+<h2 id="Null-指针"><a href="#Null-指针" class="headerlink" title="Null 指针"></a>Null 指针</h2><p>在变量声明的时候，如果没有确切的地址可以赋值，为指针变量赋一个 NULL 值是一个良好的编程习惯。赋为 NULL 值的指针被称为空指针。示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   int  *ptr = NULL;</span><br><span class="line"></span><br><span class="line">   cout &lt;&lt; &quot;ptr 的值是 &quot; &lt;&lt; ptr ;</span><br><span class="line"></span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr 的值是 0</span><br></pre></td></tr></table></figure>
+<p>在大多数的操作系统上，程序不允许访问地址为 0 的内存，因为该内存是操作系统保留的。然而，内存地址 0 有特别重要的意义，它表明该指针不指向一个可访问的内存位置。但按照惯例，如果指针包含空值（零值），则假定它不指向任何东西。</p>
+<p>因此，如果所有未使用的指针都被赋予空值，同时避免使用空指针，就可以防止误用一个未初始化的指针。很多时候，未初始化的变量存有一些垃圾值，导致程序难以调试。</p>
+<h2 id="指针的算术运算"><a href="#指针的算术运算" class="headerlink" title="指针的算术运算"></a>指针的算术运算</h2><p>指针是一个用数值表示的地址。因此，您可以对指针执行算术运算。可以对指针进行四种算术运算：++、–、+、-。</p>
+<p>假设 ptr 是一个指向地址 1000 的整型指针，是一个 32 位的整数，让我们对该指针执行下列的算术运算：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ptr++</span><br></pre></td></tr></table></figure>
+<p>执行完上述的运算之后，ptr 将指向位置 1004，因为 ptr 每增加一次，它都将指向下一个整数位置，即当前位置往后移 4 个字节。这个运算会在不影响内存位置中实际值的情况下，移动指针到下一个内存位置。如果 ptr 指向一个地址为 1000 的字符，上面的运算会导致指针指向位置 1001，因为下一个字符位置是在 1001。</p>
+<p><strong>递增一个指针</strong></p>
+<p>我们习惯使用指针代替数组，因为变量指针可以递增，而数组不能递增，因为数组是一个常量指针。使用递增变量指针，以便顺序访问数组中的每一个元素示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">	</span><br><span class="line">using namespace std;</span><br><span class="line">const int MAX = 3;</span><br><span class="line">	</span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   int  var[MAX] = &#123;10, 100, 200&#125;;</span><br><span class="line">   int  *ptr;</span><br><span class="line">	</span><br><span class="line">   // 指针中的数组地址</span><br><span class="line">   ptr = var;</span><br><span class="line">   for (int i = 0; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      cout &lt;&lt; &quot;Address of var[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot;;</span><br><span class="line">      cout &lt;&lt; ptr &lt;&lt; endl;</span><br><span class="line">	</span><br><span class="line">      cout &lt;&lt; &quot;Value of var[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot;;</span><br><span class="line">      cout &lt;&lt; *ptr &lt;&lt; endl;</span><br><span class="line">	</span><br><span class="line">      // 移动到下一个位置</span><br><span class="line">      ptr++;</span><br><span class="line">   &#125;</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  编译运行结果：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Address of var[0] = 0xbfa088b0</span><br><span class="line">Value of var[0] = 10</span><br><span class="line">Address of var[1] = 0xbfa088b4</span><br><span class="line">Value of var[1] = 100</span><br><span class="line">Address of var[2] = 0xbfa088b8</span><br><span class="line">	Value of var[2] = 200</span><br></pre></td></tr></table></figure>
+<p><strong>递减一个指针</strong></p>
+<p>对指针进行递减运算，即把值减去其数据类型的字节数，示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">const int MAX = 3;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   int  var[MAX] = &#123;10, 100, 200&#125;;</span><br><span class="line">   int  *ptr;</span><br><span class="line"></span><br><span class="line">   // 指针中最后一个元素的地址</span><br><span class="line">   ptr = &amp;var[MAX-1];</span><br><span class="line">   for (int i = MAX; i &gt; 0; i--)</span><br><span class="line">   &#123;</span><br><span class="line">      cout &lt;&lt; &quot;Address of var[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot;;</span><br><span class="line">      cout &lt;&lt; ptr &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">      cout &lt;&lt; &quot;Value of var[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot;;</span><br><span class="line">      cout &lt;&lt; *ptr &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">      // 移动到下一个位置</span><br><span class="line">      ptr--;</span><br><span class="line">   &#125;</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Address of var[3] = 0xbfdb70f8</span><br><span class="line">Value of var[3] = 200</span><br><span class="line">Address of var[2] = 0xbfdb70f4</span><br><span class="line">Value of var[2] = 100</span><br><span class="line">Address of var[1] = 0xbfdb70f0</span><br><span class="line">Value of var[1] = 10</span><br></pre></td></tr></table></figure>
+<p><strong>指针的比较</strong></p>
+<p>指针可以用关系运算符进行比较，如 ==、&lt; 和 &gt;。如果 p1 和 p2 指向两个相关的变量，比如同一个数组中的不同元素，则可对 p1 和 p2 进行大小比较。</p>
+<p>下面的程序修改了上面的实例，只要变量指针所指向的地址小于或等于数组的最后一个元素的地址 &amp;var[MAX - 1]，则把变量指针进行递增：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">const int MAX = 3;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   int  var[MAX] = &#123;10, 100, 200&#125;;</span><br><span class="line">   int  *ptr;</span><br><span class="line"></span><br><span class="line">   // 指针中第一个元素的地址</span><br><span class="line">   ptr = var;</span><br><span class="line">   int i = 0;</span><br><span class="line">   while ( ptr &lt;= &amp;var[MAX - 1] )</span><br><span class="line">   &#123;</span><br><span class="line">      cout &lt;&lt; &quot;Address of var[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot;;</span><br><span class="line">      cout &lt;&lt; ptr &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">      cout &lt;&lt; &quot;Value of var[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot;;</span><br><span class="line">      cout &lt;&lt; *ptr &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">      // 指向上一个位置</span><br><span class="line">      ptr++;</span><br><span class="line">      i++;</span><br><span class="line">   &#125;</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Address of var[0] = 0xbfce42d0</span><br><span class="line">Value of var[0] = 10</span><br><span class="line">Address of var[1] = 0xbfce42d4</span><br><span class="line">Value of var[1] = 100</span><br><span class="line">Address of var[2] = 0xbfce42d8</span><br><span class="line">Value of var[2] = 200</span><br></pre></td></tr></table></figure>
+<h2 id="指针-vs-数组"><a href="#指针-vs-数组" class="headerlink" title="指针 vs 数组"></a>指针 vs 数组</h2><p>指针和数组是密切相关的。指针和数组在很多情况下是可以互换的。例如，一个指向数组开头的指针，可以通过使用指针的算术运算或数组索引来访问数组。示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">const int MAX = 3;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   int  var[MAX] = &#123;10, 100, 200&#125;;</span><br><span class="line">   int  *ptr;</span><br><span class="line"></span><br><span class="line">   // 指针中的数组地址</span><br><span class="line">   ptr = var;</span><br><span class="line">   for (int i = 0; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      cout &lt;&lt; &quot;Address of var[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot;;</span><br><span class="line">      cout &lt;&lt; ptr &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">      cout &lt;&lt; &quot;Value of var[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot;;</span><br><span class="line">      cout &lt;&lt; *ptr &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">      // 移动到下一个位置</span><br><span class="line">      ptr++;</span><br><span class="line">   &#125;</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Address of var[0] = 0xbfa088b0</span><br><span class="line">Value of var[0] = 10</span><br><span class="line">Address of var[1] = 0xbfa088b4</span><br><span class="line">Value of var[1] = 100</span><br><span class="line">Address of var[2] = 0xbfa088b8</span><br><span class="line">Value of var[2] = 200</span><br></pre></td></tr></table></figure>
+<p>但是指针和数组并不是完全互换的。示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">const int MAX = 3;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   int  var[MAX] = &#123;10, 100, 200&#125;;</span><br><span class="line"></span><br><span class="line">   for (int i = 0; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      *var = i;    // 这是正确的语法</span><br><span class="line">      var++;       // 这是不正确的</span><br><span class="line">   &#125;</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把指针运算符 * 应用到 var 上是完全可以接受的，但修改 var 的值是非法的。这是因为 var 是一个指向数组开头的常量，不能作为左值。</p>
+<p>由于一个数组名对应一个指针常量，只要不改变数组的值，仍然可以用指针形式的表达式。例如，下面是一个有效的语句，把 var[2] 赋值为 500：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*(var + 2) = 500;  // 语句是有效的，且能成功编译，因为 var 未改变</span><br></pre></td></tr></table></figure>
+<h2 id="指针数组"><a href="#指针数组" class="headerlink" title="指针数组"></a>指针数组</h2><p>直接示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">const int MAX = 3;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   int  var[MAX] = &#123;10, 100, 200&#125;;</span><br><span class="line">   int *ptr[MAX];</span><br><span class="line"></span><br><span class="line">   for (int i = 0; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      ptr[i] = &amp;var[i]; // 赋值为整数的地址</span><br><span class="line">   &#125;</span><br><span class="line">   for (int i = 0; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      cout &lt;&lt; &quot;Value of var[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot;;</span><br><span class="line">      cout &lt;&lt; *ptr[i] &lt;&lt; endl;</span><br><span class="line">   &#125;</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将 ptr 声明为一个数组，由 MAX 个整数指针组成。因此，ptr 中的每个元素，都是一个指向 int 值的指针。</p>
+<p>编译运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Value of var[0] = 10</span><br><span class="line">Value of var[1] = 100</span><br><span class="line">Value of var[2] = 200</span><br></pre></td></tr></table></figure>
+<p>也可以定义指向字符的指针数组，来存储一个字符串列表；示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">const int MAX = 4;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   char *names[MAX] = &#123;&quot;zerocc&quot;,&quot;ccccc&quot;,&quot;zerooo&quot;,&quot;oooooo&quot;&#125;;</span><br><span class="line"></span><br><span class="line">   for (int i = 0; i &lt; MAX; i++)</span><br><span class="line">   &#123;</span><br><span class="line">      cout &lt;&lt; &quot;Value of names[&quot; &lt;&lt; i &lt;&lt; &quot;] = &quot;;</span><br><span class="line">      cout &lt;&lt; names[i] &lt;&lt; endl;</span><br><span class="line">   &#125;</span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Value of names[0] = zerocc</span><br><span class="line">Value of names[1] = ccccc </span><br><span class="line">Value of names[2] = zerooo</span><br><span class="line">Value of names[3] = oooooo</span><br></pre></td></tr></table></figure>
+<h2 id="指向指针的指针"><a href="#指向指针的指针" class="headerlink" title="指向指针的指针"></a>指向指针的指针</h2><p>指向指针的指针是一种多级间接寻址的形式，或者说是一个指针链。通常，一个指针包含一个变量的地址。当我们定义一个指向指针的指针时，第一个指针包含了第二个指针的地址，第二个指针指向包含实际值的位置。</p>
+<p>一个指向指针的指针变量必须如下声明，即在变量名前放置两个星号。例如下面声明了一个指向 int 类型指针的指针：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int **var;</span><br></pre></td></tr></table></figure>
+<p>一个目标值被一个指针间接指向到另一个指针时，访问这个值需要使用两个星号运算符，如下面所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   int  var;</span><br><span class="line">   int  *ptr;</span><br><span class="line">   int  **pptr;</span><br><span class="line"></span><br><span class="line">   var = 3000;</span><br><span class="line"></span><br><span class="line">   // 获取 var 的地址</span><br><span class="line">   ptr = &amp;var;</span><br><span class="line"></span><br><span class="line">   // 使用运算符 &amp; 获取 ptr 的地址</span><br><span class="line">   pptr = &amp;ptr;</span><br><span class="line"></span><br><span class="line">   // 使用 pptr 获取值</span><br><span class="line">   cout &lt;&lt; &quot;Value of var :&quot; &lt;&lt; var &lt;&lt; endl;</span><br><span class="line">   cout &lt;&lt; &quot;Value available at *ptr :&quot; &lt;&lt; *ptr &lt;&lt; endl;</span><br><span class="line">   cout &lt;&lt; &quot;Value available at **pptr :&quot; &lt;&lt; **pptr &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Value of var = 3000</span><br><span class="line">Value available at *ptr = 3000</span><br><span class="line">Value available at **pptr = 3000</span><br></pre></td></tr></table></figure>
+<h2 id="指针作为函数参数"><a href="#指针作为函数参数" class="headerlink" title="指针作为函数参数"></a>指针作为函数参数</h2><p>C++ 允许您传递指针给函数，示例传递一个无符号的 long 型指针给函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;ctime&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line">void getSeconds(unsigned long *par);</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   unsigned long sec;</span><br><span class="line"></span><br><span class="line">   getSeconds( &amp;sec );</span><br><span class="line"></span><br><span class="line">   // 输出实际值</span><br><span class="line">   cout &lt;&lt; &quot;Number of seconds :&quot; &lt;&lt; sec &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void getSeconds(unsigned long *par)</span><br><span class="line">&#123;</span><br><span class="line">   // 获取当前的秒数</span><br><span class="line">   *par = time( NULL );</span><br><span class="line">   return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Number of seconds :1294450468</span><br></pre></td></tr></table></figure>
+<h2 id="函数返回值为指针"><a href="#函数返回值为指针" class="headerlink" title="函数返回值为指针"></a>函数返回值为指针</h2><p>返回指针的函数，示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int *function()</span><br><span class="line">&#123;</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>C++ 不支持在函数外返回局部变量的地址，除非定义局部变量为 static 变量。</p>
+<p>示例来看下面的函数，它会生成 10 个随机数，并使用表示指针的数组名（即第一个数组元素的地址）来返回它们，具体如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;ctime&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">// 要生成和返回随机数的函数</span><br><span class="line">int * getRandom( )</span><br><span class="line">&#123;</span><br><span class="line">  static int  r[10];</span><br><span class="line"></span><br><span class="line">  // 设置种子</span><br><span class="line">  srand( (unsigned)time( NULL ) );</span><br><span class="line">  for (int i = 0; i &lt; 10; ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    r[i] = rand();</span><br><span class="line">    cout &lt;&lt; r[i] &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  return r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main ()</span><br><span class="line">&#123;</span><br><span class="line">   // 一个指向整数的指针</span><br><span class="line">   int *p;</span><br><span class="line"></span><br><span class="line">   p = getRandom();</span><br><span class="line">   for ( int i = 0; i &lt; 10; i++ )</span><br><span class="line">   &#123;</span><br><span class="line">       cout &lt;&lt; &quot;*(p + &quot; &lt;&lt; i &lt;&lt; &quot;) : &quot;;</span><br><span class="line">       cout &lt;&lt; *(p + i) &lt;&lt; endl;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">624723190</span><br><span class="line">1468735695</span><br><span class="line">807113585</span><br><span class="line">976495677</span><br><span class="line">613357504</span><br><span class="line">1377296355</span><br><span class="line">1530315259</span><br><span class="line">1778906708</span><br><span class="line">1820354158</span><br><span class="line">667126415</span><br><span class="line">*(p + 0) : 624723190</span><br><span class="line">*(p + 1) : 1468735695</span><br><span class="line">*(p + 2) : 807113585</span><br><span class="line">*(p + 3) : 976495677</span><br><span class="line">*(p + 4) : 613357504</span><br><span class="line">*(p + 5) : 1377296355</span><br><span class="line">*(p + 6) : 1530315259</span><br><span class="line">*(p + 7) : 1778906708</span><br><span class="line">*(p + 8) : 1820354158</span><br><span class="line">*(p + 9) : 667126415</span><br></pre></td></tr></table></figure>
+<h1 id="C-字符串"><a href="#C-字符串" class="headerlink" title="C++ 字符串"></a>C++ 字符串</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/03/03/C++/ C++ 总结笔记一/" rel="next" title="C++ 总结笔记一">
+                <i class="fa fa-chevron-left"></i> C++ 总结笔记一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/03/23/C++/C++ 调用 MATLAB实例 /" rel="prev" title="C++ 调用 MATLAB实例">
+                C++ 调用 MATLAB实例 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zerocc</p>
+              <p class="site-description motion-element" itemprop="description">似水流年在楼外，我却长醉不愿醒。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#C-数组"><span class="nav-number">1.</span> <span class="nav-text">C++ 数组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-指针"><span class="nav-number">2.</span> <span class="nav-text">C++ 指针</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是指针"><span class="nav-number">2.1.</span> <span class="nav-text">什么是指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针的基本使用"><span class="nav-number">2.2.</span> <span class="nav-text">指针的基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Null-指针"><span class="nav-number">2.3.</span> <span class="nav-text">Null 指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针的算术运算"><span class="nav-number">2.4.</span> <span class="nav-text">指针的算术运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针-vs-数组"><span class="nav-number">2.5.</span> <span class="nav-text">指针 vs 数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针数组"><span class="nav-number">2.6.</span> <span class="nav-text">指针数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指向指针的指针"><span class="nav-number">2.7.</span> <span class="nav-text">指向指针的指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针作为函数参数"><span class="nav-number">2.8.</span> <span class="nav-text">指针作为函数参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数返回值为指针"><span class="nav-number">2.9.</span> <span class="nav-text">函数返回值为指针</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-字符串"><span class="nav-number">3.</span> <span class="nav-text">C++ 字符串</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">[object Object]</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

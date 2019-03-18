@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Bug,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ermination Reason: Namespace SPRINGBOARD, Code 0x8badf00d  异常代码 0x8badf00d 指示应用程序已终止的 iOS 因为看门狗超时发生。应用程序时间太长，启动、 终止，或对系统事件作出响应。一个常见的原因做在主线程上的同步联网。无论操作是线程 0 上： 需要搬到后台线程，或处理方式不同，所以，它不会阻止在主线程。 原因：程序启动时">
+<meta name="keywords" content="Bug">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 开发中遇到的 Bug">
+<meta property="og:url" content="http://yoursite.com/2015/07/01/iOS/iOS 开发中遇到的 Bug/index.html">
+<meta property="og:site_name" content="zerocc博客">
+<meta property="og:description" content="ermination Reason: Namespace SPRINGBOARD, Code 0x8badf00d  异常代码 0x8badf00d 指示应用程序已终止的 iOS 因为看门狗超时发生。应用程序时间太长，启动、 终止，或对系统事件作出响应。一个常见的原因做在主线程上的同步联网。无论操作是线程 0 上： 需要搬到后台线程，或处理方式不同，所以，它不会阻止在主线程。 原因：程序启动时">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-12-10T08:12:10.190Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 开发中遇到的 Bug">
+<meta name="twitter:description" content="ermination Reason: Namespace SPRINGBOARD, Code 0x8badf00d  异常代码 0x8badf00d 指示应用程序已终止的 iOS 因为看门狗超时发生。应用程序时间太长，启动、 终止，或对系统事件作出响应。一个常见的原因做在主线程上的同步联网。无论操作是线程 0 上： 需要搬到后台线程，或处理方式不同，所以，它不会阻止在主线程。 原因：程序启动时">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/07/01/iOS/iOS 开发中遇到的 Bug/">
+
+
+
+
+
+  <title>iOS 开发中遇到的 Bug | zerocc博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zerocc博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">仗键行天下</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-ios">
+          <a href="/categories/iOS" rel="section">
+            
+            iOS
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-c++">
+          <a href="/categories/C" rel="section">
+            
+            C++
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-音视频">
+          <a href="/categories/音视频" rel="section">
+            
+            音视频
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-安全攻防">
+          <a href="/categories/安全攻防" rel="section">
+            
+            安全攻防
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-基础整理">
+          <a href="/categories/基础整理" rel="section">
+            
+            基础整理
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-时光沙漏">
+          <a href="/categories/时光沙漏" rel="section">
+            
+            时光沙漏
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/07/01/iOS/iOS 开发中遇到的 Bug/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zerocc">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zerocc博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS 开发中遇到的 Bug</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-07-01T19:57:03+08:00">
+                2015-07-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-12-10T16:12:10+08:00">
+                2018-12-10
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS-开发日常/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS - 开发日常</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<blockquote>
+<p>ermination Reason: Namespace SPRINGBOARD, Code 0x8badf00d</p>
+</blockquote>
+<p>异常代码 0x8badf00d 指示应用程序已终止的 iOS 因为看门狗超时发生。应用程序时间太长，启动、 终止，或对系统事件作出响应。一个常见的原因做在主线程上的同步联网。无论操作是线程 0 上： 需要搬到后台线程，或处理方式不同，所以，它不会阻止在主线程。</p>
+<p><strong>原因</strong>：程序启动时候不能超过5－6秒；</p>
+<p><strong>解决</strong>：优化应用启动速度，UIApplicationDelegate中的不要有好时操作，或者把耗时操作异步处理。</p>
+<hr>
+<blockquote>
+<p>[{ device: ‘bb58454cee9ad7515bb779d7f1a6bc3a07e51fea241796b376<strong><strong><strong>**</strong></strong></strong>‘, status: ‘400’, response: { reason: ‘BadDeviceToken’ } } ]。服务器生产环境推送失败。</p>
+</blockquote>
+<p><strong>原因</strong>： apns 服务器与 app 类型环境不匹配（获取的手机的 token 环境），苹果服务器返回 BadDeviceToken；</p>
+<p>证书与 apns 服务器类型不匹配，苹果服务器则返回 BadCertificateEnvironment 错误；</p>
+<p>apns有两类服务器：</p>
+<p>Development server: api.development.push.apple.com:443；</p>
+<p>Production server: api.push.apple.com:443；</p>
+<p><strong>解决</strong>：生产环境推送服务器连接的 apns 苹果服务器却是开发环境的，改正后推送正常。</p>
+<hr>
+<blockquote>
+<p>dyld: Library not loaded: @rpath/QuickUnifyPlatform.framework/QuickUnifyPlatform<br>  Referenced from: /var/containers/Bundle/Application/6262F2F0-2EF3-4DF2-AF42-B065352E1C49/xxx.app/xxx<br>  Reason: image not found<br>Message from debugger: Terminated due to signal 6</p>
+</blockquote>
+<p><strong>原因</strong>：导入第三方库，运行程序报错crash，意思是未能加载这个 .framework,镜像没有；</p>
+<p><strong>解决</strong>： </p>
+<ol>
+<li>TARGET -&gt; General -&gt; Embedded Binaries -&gt; 点击 ➕ 按钮添加这个 .framework；</li>
+<li>Target -&gt; Build Settings -&gt; Runpath Search Paths：检查是否有 <code>@executable_path/Frameworks</code> 字段（xcode 默认是有的），无的话添加上；</li>
+<li>如果还是不能解决参考 <a href="https://stackoverflow.com/search?q=dyld+library+not+loaded" target="_blank" rel="noopener">Library not loaded stackoverflow</a></li>
+</ol>
+<hr>
+<blockquote>
+<p><code>_dispatch_once[inlined]</code>、<br> <code>0x1008a07a0 &lt;+288&gt;: lbr  x0, [sp #64]</code></p>
+</blockquote>
+<p><strong>原因</strong>：使用单例造成的死锁，多个单例间的初始化调用中直接或间接存在相互调用。A-&gt;B-&gt;A 或者 A-&gt;B-&gt;C-&gt;A。</p>
+<p><strong>解决</strong>：查看代码呗，将滥用单例的类抽出打破这种循环引用。<a href="[http://blog.csdn.net/opentogether/article/details/53172888]">参考滥用单例之dispatch_once死锁</a></p>
+<hr>
+<blockquote>
+<p>Implicit declaration of function ‘XXX’ is invalid in C99</p>
+</blockquote>
+<p><strong>原因</strong>：C 语言的 C99 编译错误，一般是出现在 C 调用苹果 API 底层接口报错。</p>
+<p><strong>解决</strong>：首先设置 C 语言的编译选项， TARGET -&gt; Build Setting -&gt; 搜索 C Language Dialect - 设置为 GNU99 [-std=gnu99],这也是 Xcode 默认的设置。其次是导入 API 的头文件。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Bug/" rel="tag"># Bug</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/01/iOS/UITextField 相关处理 /" rel="next" title="UITextField 相关处理">
+                <i class="fa fa-chevron-left"></i> UITextField 相关处理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/01/基础整理/Mac 下常用依赖包或环境配置/" rel="prev" title="Mac 下常用依赖包或环境配置">
+                Mac 下常用依赖包或环境配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zerocc</p>
+              <p class="site-description motion-element" itemprop="description">似水流年在楼外，我却长醉不愿醒。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">[object Object]</span>
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
