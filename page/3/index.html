@@ -750,6 +750,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/07/01/iOS/UITextField 相关处理 /">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zerocc">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zerocc博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2015/07/01/iOS/UITextField 相关处理 /" itemprop="url">UITextField 相关处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-07-01T19:57:03+08:00">
+                2015-07-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2015-05-01T23:57:03+08:00">
+                2015-05-01
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="UITextField-监听输入文本"><a href="#UITextField-监听输入文本" class="headerlink" title="UITextField 监听输入文本"></a>UITextField 监听输入文本</h1><p><strong>1. UITextFieldDelegate 系统代理方法</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string&#123;</span><br><span class="line"></span><br><span class="line">   //变化前的字符串</span><br><span class="line">   NSLog(@&quot;%@&quot;,textField.text);</span><br><span class="line">   </span><br><span class="line">   // 变化后的</span><br><span class="line">   NSString *newStr = [textField.text stringByAppendingString:string];</span><br><span class="line">   return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只能监听到新增的文本内容，对于键盘上删除事件的文本无法进行处理。</p>
+<p><strong>2. UITextField 系统通知监听</strong><br>UITextField 输入文本变化系统通知：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIKIT_EXTERN NSNotificationName const UITextFieldTextDidChangeNotification;</span><br></pre></td></tr></table></figure>
+<p>使用姿势：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">   </span><br><span class="line">    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldTextDidChange:)</span><br><span class="line">                                                name:UITextFieldTextDidChangeNotification</span><br><span class="line">                                              object:self.phoneTextField];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(void)textFieldTextDidChange:(NSNotification *)notification</span><br><span class="line">&#123;</span><br><span class="line">    UITextField *textfield = [notification object];</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;输入后的文本：%@&quot;,textfield.text);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>即可监听到增加的也可以监听到删除的，得到是我们想得到的目前 TextField 上具体的文本内容；缺点写起来忒繁琐；</p>
+<p><strong>3. UITextField 实例添加 UIControlEventEditingChanged 事件</strong></p>
+<p>具体姿势：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    self.phoneTextField = [[UITextField alloc] init];</span><br><span class="line">    [self.phoneTextField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)textFieldChanged:(UITextField *)textField</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;输入后的文本：%@&quot;,textField.text);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/07/01/iOS/iOS 开发中遇到的 Bug/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -895,170 +1059,6 @@
 </blockquote>
 <p><strong>原因</strong>：C 语言的 C99 编译错误，一般是出现在 C 调用苹果 API 底层接口报错。</p>
 <p><strong>解决</strong>：首先设置 C 语言的编译选项， TARGET -&gt; Build Setting -&gt; 搜索 C Language Dialect - 设置为 GNU99 [-std=gnu99],这也是 Xcode 默认的设置。其次是导入 API 的头文件。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/07/01/iOS/UITextField 相关处理 /">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zerocc">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zerocc博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/07/01/iOS/UITextField 相关处理 /" itemprop="url">UITextField 相关处理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-07-01T19:57:03+08:00">
-                2015-07-01
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2015-05-01T23:57:03+08:00">
-                2015-05-01
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="UITextField-监听输入文本"><a href="#UITextField-监听输入文本" class="headerlink" title="UITextField 监听输入文本"></a>UITextField 监听输入文本</h1><p><strong>1. UITextFieldDelegate 系统代理方法</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string&#123;</span><br><span class="line"></span><br><span class="line">   //变化前的字符串</span><br><span class="line">   NSLog(@&quot;%@&quot;,textField.text);</span><br><span class="line">   </span><br><span class="line">   // 变化后的</span><br><span class="line">   NSString *newStr = [textField.text stringByAppendingString:string];</span><br><span class="line">   return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>只能监听到新增的文本内容，对于键盘上删除事件的文本无法进行处理。</p>
-<p><strong>2. UITextField 系统通知监听</strong><br>UITextField 输入文本变化系统通知：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UIKIT_EXTERN NSNotificationName const UITextFieldTextDidChangeNotification;</span><br></pre></td></tr></table></figure>
-<p>使用姿势：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">   </span><br><span class="line">    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(textFieldTextDidChange:)</span><br><span class="line">                                                name:UITextFieldTextDidChangeNotification</span><br><span class="line">                                              object:self.phoneTextField];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">-(void)textFieldTextDidChange:(NSNotification *)notification</span><br><span class="line">&#123;</span><br><span class="line">    UITextField *textfield = [notification object];</span><br><span class="line">    </span><br><span class="line">    NSLog(@&quot;输入后的文本：%@&quot;,textfield.text);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>即可监听到增加的也可以监听到删除的，得到是我们想得到的目前 TextField 上具体的文本内容；缺点写起来忒繁琐；</p>
-<p><strong>3. UITextField 实例添加 UIControlEventEditingChanged 事件</strong></p>
-<p>具体姿势：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    self.phoneTextField = [[UITextField alloc] init];</span><br><span class="line">    [self.phoneTextField addTarget:self action:@selector(textFieldChanged:) forControlEvents:UIControlEventEditingChanged];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)textFieldChanged:(UITextField *)textField</span><br><span class="line">&#123;</span><br><span class="line">    NSLog(@&quot;输入后的文本：%@&quot;,textField.text);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
